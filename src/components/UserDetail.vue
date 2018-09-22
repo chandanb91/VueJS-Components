@@ -9,23 +9,29 @@
 </template>
 
 <script>
-export default {
-    props: {
-        name: {
-            type: String
+    import { eventBus } from '../main';
+    export default {
+        props: {
+            name: {
+                type: String
+            },
+            userAge: Number
         },
-        userAge: Number
-    },
-    methods: {
-        switchName() {
-            return this.name.split("").reverse().join("");
+        methods: {
+            switchName() {
+                return this.name.split("").reverse().join("");
+            },
+            resetName() {
+                this.name = 'Chandan';
+                this.$emit('nameWasReset', this.name);
+            }
         },
-        resetName() {
-            this.name = 'Chandan';
-            this.$emit('nameWasReset', this.name);
+        created() {
+            eventBus.$on('ageWasEdited', (age) => {
+                this.userAge = age;
+            })   
         }
     }
-}
 </script>
 
 <style scoped>
